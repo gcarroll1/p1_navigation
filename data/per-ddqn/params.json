@@ -1,0 +1,23 @@
+{
+    "experiment_name": "per-ddqn",
+    "model_type": "PERDDQN",
+    "buffer_size": 1e5,
+    "gamma": 0.99,
+    "alpha": 0.4,
+    "beta_start": 0.4,
+    "beta_increments": 200,
+    "update_rate": 1,
+    "target_tau": 1e-3,
+    "learning_rate": 1e-3,
+    "batch_size": 32,
+    "dropout": 0.2,
+    "eps_start": 1.0,
+    "eps_end": 0.01,
+    "eps_decay": 0.975,
+    "max_train_t": 300,
+    "max_test_t": 300,
+    "mean_windowsize": 100,
+    "target_score": 13.0,
+    "train_episodes": 1800,
+    "test_episodes": 100
+}

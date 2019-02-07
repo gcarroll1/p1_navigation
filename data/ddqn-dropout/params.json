@@ -1,0 +1,23 @@
+{
+    "experiment_name": "ddqn-dropout",
+    "model_type": "DDQN",
+    "buffer_size": 1e5,
+    "gamma": 0.99,
+    "alpha": 0.0,
+    "beta_start": 1.0,
+    "beta_increments": 1,
+    "update_rate": 1,
+    "target_tau": 1e-3,
+    "learning_rate": 1e-3,
+    "batch_size": 32,
+    "dropout": 0.2,
+    "eps_start": 1.0,
+    "eps_end": 0.01,
+    "eps_decay": 0.975,
+    "max_train_t": 300,
+    "max_test_t": 300,
+    "mean_windowsize": 100,
+    "target_score": 13.0,
+    "train_episodes": 1800,
+    "test_episodes": 100
+}

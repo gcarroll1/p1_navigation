@@ -6,7 +6,7 @@
 
 ### Introduction
 
-For this project, you will train an agent to navigate (and collect bananas!) in a large, square world.  
+This project is a Python Deep Reinforcement Learning using PyTorch to train an agent to navigate (and collect bananas!) in a large, square world.  
 
 ![Trained Agent][image1]
 

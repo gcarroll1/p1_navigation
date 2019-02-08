@@ -1,8 +1,8 @@
-## Project 1: Navigation report
+# Project 1: Navigation report
 
 ## Table of content
 * [1. Introduction](#introduction)
-* [2. Learning algorithms](#learning-algo)
+* [2. Solutions Overview](#overview)
   * [2.1 Vanilla DQN](#vanilla-dqn)
   * [2.2 Double DQN](#double-dqn)
   * [2.3 Double DQN with 20% dropout](#ddqn-dropout)
@@ -27,97 +27,123 @@ The state space has 37 dimensions and contains the agent's velocity, along with 
 The task is episodic, and in order to solve the environment, the agent must get an average score of +13 over 100 consecutive episodes.
 
 
-## 2. Learning algorithms
-<a id="learning-algo"></a>
+## 2. Solution Overview
+<a id="overview"></a>
 
-The goal of this project is to implement value-based Deep Reinforcement Learning algorithms in order to solve Unity Bananas' environment. We have at our disposal a series of algorithms from Deep Q-network (DQN), double DQN, Prioritized Replay DQN, Dueling DQN, ...
+This project features 4 different variations of a Deep Q-Network based Deep Reinforced Learning models to automate the collection of bananas with the above environment.  The 4 models trained are all successful in acheiving the targeted average score but vary in stability and perfromance.  The 4 solutions featured are:
+    - A basic standard Deep Q-Network (DQN)
+    - A Double Deep Q-Network (DDQN)
+    - A DDQN incorporating a 20% dropout layer
+    - A DDQN with Prioritize Experience Replay (PER) and a 20% dropout layer
 
 Our approach consists in:
-1. re-use Vanilla DQN with hyperparameters used to solve OpenAI Gym Lunar Landing environment;
-2. based on visual observation of agent's behaviour during learning, guessing more optimal hyperparameters;
-3. explore more systematically hyperparameters space to find out "best parameters";
-4. implement one of the improved version of DQN (Double DQN in our case).
+    1. re-use Vanilla DQN with hyperparameters used to earlier in the Udacity DRL Nanodegree;
+    2. based on visual observation of agent's behaviour during learning, guessing more optimal hyperparameters;
+    3. experiment with 4 variations on the base DNQ graphing their rolling average mean
+    4. explore hyperparameters space to find out "best parameters";
+
+
 
 ### 2.1 Vanilla DQN with default parameters
 <a id="vanilla-dqn"></a>
 
+#### Training
 We first implemented a Vanilla DQN approach with the following agent and DQN hyperparameters:
 
-```
-n_episodes=2000                   # maximum number of training episodes
-max_t=1000                        # maximum number of timesteps per episode
-eps_start=1.0                     # starting value of epsilon, for epsilon-greedy action selection
-eps_end=0.01                      # minimum value of epsilon
-eps_decay=0.995                   # multiplicative factor (per episode) for decreasing epsilon
+    Using hyperparameters from data/dqn-vanilla/params.json:
+    
+    ```
+    n_episodes=1800                   # maximum number of training episodes
+    max_t=300                         # maximum number of timesteps per episode
+    eps_start=1.0                     # starting value of epsilon, for epsilon-greedy action selection
+    eps_end=0.01                      # minimum value of epsilon
+    eps_decay=0.97                    # multiplicative factor (per episode) for decreasing epsilon
 
-hidden_layers=[64, 64]            # nb. of hidden layers and unit per layer of neural network
-buffer_size=int(1e5)              # size of replay buffer
-batch_size=64                     # learning samples batch size
-gamma=0.99                        # discount factor
-lr=0.0005                         # learning rate
-```
+    hidden_layers=[64, 64]            # nb. of hidden layers and unit per layer of neural network
+    buffer_size=int(1e5)              # size of replay buffer
+    batch_size=32                     # learning samples batch size
+    gamma=0.99                        # discount factor
+    lr=0.001                          # learning rate
+    ```
 
-It is important to note that the choice of these parameters is somewhat arbitrary and simply inherited from a previous environment. However, as a first attempt, keeping exploration high with a large discount factor looks like a sensible choice.
+    It is important to note that the choice of these parameters is somewhat arbitrary and simply inherited from a previous environment. However, as a first attempt, keeping exploration high with a large discount factor looks like a sensible choice.
 
-The plot below shows that although this quite arbitrary choice, the agent is able to learn and solve the environment in less than 500 episodes.
+    The plot below shows that although this quite arbitrary choice, the agent is able to learn and solve the environment in 400 episodes.
 
-<img src="media/dqn-vanilla_Train_moving_average.png" width="500" />
+    <img src="media/dqn-vanilla_Train_moving_average.png" width="500" />
+    
+    with are training result:
+    Environment solved in 400 episodes!	Average Score: 13.00	Elapse time: 1303.51
+
+#### Evaluation
+    On running the trained model from weights saved in 'dqn-vanilla-model.pth' proved successfull as:
+        Environment solved in 1 episodes!	Average Score: 15.00	Elapse time: 30.42
+
+
 
 ### 2.2 Double DQN
 <a id="double-dqn"></a>
 
-Finding out a relevant exploration vs. exploitation strategy is central to Reinforcement Learning and one of the biggest challenge. In our particular context, while watching the agent learning, we notice that:
+As Reinforcement Learning algorithms are notoriously unstable the primary aim of the next 3 experiments was to improve stability by adding complexity and tuning hyperparameters.  In our particular context, while watching the agent learning, we notice that:
 * based on agent's distance from closest bananas, exploration required may vary (it looks a bit irrelevant to oscillate many times left, right, ... at each step when closest bananas are far away);
 * at the same time, the agent gets hooked by walls quite frequently and needs randomness in order to get off the wall and continue its "trip".
 
-**Here we decide to decrease `eps_start` to 0.5.**
+#### Training
 
-We can see that indeed, the agent solves the environment in almost 400 episodes instead.
-<img src="media/double-ddqn_Train_moving_average.png" width="500" />
+    Using hyperparameters (basicly unchanged) from data/double-dqn/params.json, we can see that indeed, the agent solves the environment in almost the same 400 episodes, but with greater stability. 
+
+    <img src="media/double-ddqn_Train_moving_average.png" width="500" />
+
+#### Evaluation
+    On running the trained model from weights saved in 'double-dqn-model.pth' proved successfull as:
+        Environment solved in 1 episodes!	Average Score: 18.00	Elapse time: 30.22
+
+
 
 ### 2.3 Double DQN with 20% dropout
 <a id="ddqn-dropout"></a>
 
-In that part, we want to test a more systematic exploration of hyperparameters space. Exploring a large state space along many dimensions and episodes might take a week or more. Instead, as a proof-of-concept we have simply explored the following hyperparameters space:
+Next we added a dropout layer with a 20% probability parameter to mimimize overfitting during learning.  We found that we also needed to reduce the Update_rate to every update to maintain stability.
 
-```
-eps_start = [0.4, 0.5, 0.6]
-gamma = [0.97, 0.98, 0.99]
-lr = [0.0001, 0.00025, 0.0005]
-eps_end=0.01                      # minimum value of epsilon
-eps_decay=0.995                   # multiplicative factor (per episode) for decreasing epsilon
-hidden_layers=[64, 64]            # nb. of hidden layers and unit per layer of neural network
-buffer_size=int(1e6)              # size of replay buffer
-batch_size=128                    # learning samples batch size
-```
+#### Training
 
-and keep the ones having the highest mean over the last 5 episodes out of 10 episodes in total. Again, in a real scenario, we would have explored a much broader set of values over many dimensions and over 400 episodes for instance. In particular, focusing on the first episodes where exploration is large introduces a lot of randomness, hence our "best" hyperparameters should be put in perspective.
+    Using hyperparameters (basicly unchanged) from data/double-dqn/params.json, we indeed observe a faster learning with:
+    Environment solved in 280 episodes!	Average Score: 13.00	Elapse time: 2053.22
 
-Nevertheless, after exploration of this hyperparameters (sub)space, we get the following "best" ones:
 
-```
-eps_start = 0.4 # epsilon-greedy initial exploration level
-gamma = 0.97    # discount factor
-lr = 0.0001     # learning rate
-```
+    <img src="imedia/ddqn-dropout_Train_moving_average.png" width="500" />
 
-We now apply these parameters to a Vanilla DQN agent and indeed observe a much faster learning.
+#### Evaluation
+    On running the trained model from weights saved in 'ddqn-dropout-model.pth' proved successfull as:
+        Environment solved in 1 episodes!	Average Score: 20.00	Elapse time: 29.99
 
-<img src="imedia/ddqn-dropout_Train_moving_average.png" width="500" />
 
-This is already a big improvement and have no doubt that a more thorough exploration of hyperparameters space would lead to even better results.
 
 ### 2.4 Double DQN with Prioritize Experience Replay
 <a id="per-ddqn"></a>
 
-Given the "best" hyperparameters, we now implement a slightly improved version of a Vanilla DQN reducing over-estimation of DQN target values.
+Finally, we added in the use of a Prioritize Experience Replay buffer to the DDQN with a 20% dropout rate.  By playing with the beta hyperparameter we found greatest stability as when it was set to reach 1 close to the target point.
 
-We do observe a clear improvement.
+#### Training
 
-<img src="media/per-ddqn_Train_moving_average.png" width="500" />
+    Using hyperparameters from data/ddqn-per/params.json:
+    
+    ```
+            alpha=0.4              # prioritization level (ALPHA=0 is uniform sampling so no prioritization)
+            beta_start=0.4         # controls how much IS weightings affect learning (beta=0 at start moving to 1 towards the end )
+            beta_increments=300    # the number of intervals beta will increase to get to 1.0
+            update_rate=1          # how often to update the network
+    ```
+
+    We do observe a clear improvement.
+        Environment solved in 176 episodes!	Average Score: 13.03	Elapse time: 1933.13
+
+    <img src="media/per-ddqn_Train_moving_average.png" width="500" />
 
 
-To be significative, it would be better to repeat this experiment over various environment seeds and multiple runs of the algorithms. We might as well need to run the hyperparameters search over the DDQN itself. 
+#### Evaluation
+    On running the trained model from weights saved in 'ddqn-per-model.pth' proved successfull as:
+        Environment solved in 1 episodes!	Average Score: 20.00	Elapse time: 29.85
 
 
 ## 3. Conclusion
@@ -129,9 +155,9 @@ To be significative, it would be better to repeat this experiment over various e
 ### 3.2 Ideas for future work
 <a id="future-work"></a>
 
-As regards potential axis of improvements, we can obviously implement DQN improved algorithms such as Prioritized Experience Replay, Dueling, Rainbow, ... We assume we would get better results. However, we are convinced that a systematic exploration of the hyperparameters, several Neural Networks architecture, ... would be even more critical to build an agent that would learn faster.
+As regards potential improvements, we can obviously implement DQN improved algorithms such as Dueling, Rainbow, ... We assume we would get better results. However, we are convinced that a systematic exploration of the hyperparameters, several Neural Networks architecture, ... would be even more critical to build an agent with greater stability and confidence.
 
-Additionnally, it would be interesting to find out how learning from pixels would "change the game".
+Additionnally, it would be interesting to find out how learning from a CNN watchings pixels would vary from using the set environment.
 
-Last, the variability of scores (event when the agent is close to solve the environment) might be an issue. Setting up a more ambitious goal to consider this environment solved, for instance having min score higher than 13 over 100 episodes would be an interesting challenge.
+
 

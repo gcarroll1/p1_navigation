@@ -20,6 +20,14 @@ The state space has 37 dimensions and contains the agent's velocity, along with 
 
 The task is episodic, and in order to solve the environment, your agent must get an average score of +13 over 100 consecutive episodes.
 
+### Solution Overview
+
+This project features 4 different variations of a Deep Q-Network based Deep Reinforced Learning models to automate the collection of bananas with the above environment.  The 4 models trained are all successful in acheiving the targeted average score but vary in stability and perfromance.  The 4 solutions featured are:
+    - A basic standard Deep Q-Network (DQN)
+    - A Double Deep Q-Network (DDQN)
+    - A DDQN incorporating a 20% dropout layer
+    - A DDQN with Prioritize Experience Replay (PER) and a 20% dropout layer
+
 ### Getting Started
 
 1. Download the environment from one of the links below.  You need only select the environment that matches your operating system:

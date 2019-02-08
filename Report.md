@@ -152,7 +152,13 @@ On running the trained model from weights saved in 'ddqn-per-model.pth' proved s
 ### 3.1 Findings
 <a id="findings"></a>
 
-
+My take-aways from the project are:
+* stability can be managed by increasing model complexity. 
+* Hyperparameter tuning has a fine lines between what works and what doesn't
+* Overfitting in Reinforcement Learning is easier and less obvious than traditional machine learning
+* stability can be seen in average means graphs by lack of movements
+* as mentioned above, PER beta needs to converge to 1 in line with the target
+* watching learning is best way of assessing stability
 
 ### 3.2 Ideas for future work
 <a id="future-work"></a>

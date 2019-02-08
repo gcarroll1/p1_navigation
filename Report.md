@@ -31,16 +31,16 @@ The task is episodic, and in order to solve the environment, the agent must get 
 <a id="overview"></a>
 
 This project features 4 different variations of a Deep Q-Network based Deep Reinforced Learning models to automate the collection of bananas with the above environment.  The 4 models trained are all successful in acheiving the targeted average score but vary in stability and perfromance.  The 4 solutions featured are:
-    - A basic standard Deep Q-Network (DQN)
-    - A Double Deep Q-Network (DDQN)
-    - A DDQN incorporating a 20% dropout layer
-    - A DDQN with Prioritize Experience Replay (PER) and a 20% dropout layer
+- A basic standard Deep Q-Network (DQN)
+- A Double Deep Q-Network (DDQN)
+- A DDQN incorporating a 20% dropout layer
+- A DDQN with Prioritize Experience Replay (PER) and a 20% dropout layer
 
 Our approach consists in:
-    1. re-use Vanilla DQN with hyperparameters used to earlier in the Udacity DRL Nanodegree;
-    2. based on visual observation of agent's behaviour during learning, guessing more optimal hyperparameters;
-    3. experiment with 4 variations on the base DNQ graphing their rolling average mean
-    4. explore hyperparameters space to find out "best parameters";
+1. re-use Vanilla DQN with hyperparameters used to earlier in the Udacity DRL Nanodegree;
+2. based on visual observation of agent's behaviour during learning, guessing more optimal hyperparameters;
+3. experiment with 4 variations on the base DNQ graphing their rolling average mean
+4. explore hyperparameters space to find out "best parameters";
 
 
 
@@ -66,18 +66,18 @@ We first implemented a Vanilla DQN approach with the following agent and DQN hyp
     lr=0.001                          # learning rate
     ```
 
-    It is important to note that the choice of these parameters is somewhat arbitrary and simply inherited from a previous environment. However, as a first attempt, keeping exploration high with a large discount factor looks like a sensible choice.
+It is important to note that the choice of these parameters is somewhat arbitrary and simply inherited from a previous environment. However, as a first attempt, keeping exploration high with a large discount factor looks like a sensible choice.
 
-    The plot below shows that although this quite arbitrary choice, the agent is able to learn and solve the environment in 400 episodes.
+The plot below shows that although this quite arbitrary choice, the agent is able to learn and solve the environment in 400 episodes.
 
-    <img src="media/dqn-vanilla_Train_moving_average.png" width="500" />
-    
-    with are training result:
-    Environment solved in 400 episodes!	Average Score: 13.00	Elapse time: 1303.51
+<img src="media/dqn-vanilla_Train_moving_average.png" width="500" />
+
+with are training result:
+Environment solved in 400 episodes!	Average Score: 13.00	Elapse time: 1303.51
 
 #### Evaluation
-    On running the trained model from weights saved in 'dqn-vanilla-model.pth' proved successfull as:
-        Environment solved in 1 episodes!	Average Score: 15.00	Elapse time: 30.42
+On running the trained model from weights saved in 'dqn-vanilla-model.pth' proved successfull as:
+    Environment solved in 1 episodes!	Average Score: 15.00	Elapse time: 30.42
 
 
 
@@ -90,13 +90,13 @@ As Reinforcement Learning algorithms are notoriously unstable the primary aim of
 
 #### Training
 
-    Using hyperparameters (basicly unchanged) from data/double-dqn/params.json, we can see that indeed, the agent solves the environment in almost the same 400 episodes, but with greater stability. 
+Using hyperparameters (basicly unchanged) from data/double-dqn/params.json, we can see that indeed, the agent solves the environment in almost the same 400 episodes, but with greater stability. 
 
-    <img src="media/double-ddqn_Train_moving_average.png" width="500" />
+<img src="media/double-ddqn_Train_moving_average.png" width="500" />
 
 #### Evaluation
-    On running the trained model from weights saved in 'double-dqn-model.pth' proved successfull as:
-        Environment solved in 1 episodes!	Average Score: 18.00	Elapse time: 30.22
+On running the trained model from weights saved in 'double-dqn-model.pth' proved successfull as:
+    Environment solved in 1 episodes!	Average Score: 18.00	Elapse time: 30.22
 
 
 
@@ -107,15 +107,15 @@ Next we added a dropout layer with a 20% probability parameter to mimimize overf
 
 #### Training
 
-    Using hyperparameters (basicly unchanged) from data/double-dqn/params.json, we indeed observe a faster learning with:
-    Environment solved in 280 episodes!	Average Score: 13.00	Elapse time: 2053.22
+Using hyperparameters (basicly unchanged) from data/double-dqn/params.json, we indeed observe a faster learning with:
+Environment solved in 280 episodes!	Average Score: 13.00	Elapse time: 2053.22
 
 
-    <img src="imedia/ddqn-dropout_Train_moving_average.png" width="500" />
+<img src="imedia/ddqn-dropout_Train_moving_average.png" width="500" />
 
 #### Evaluation
-    On running the trained model from weights saved in 'ddqn-dropout-model.pth' proved successfull as:
-        Environment solved in 1 episodes!	Average Score: 20.00	Elapse time: 29.99
+On running the trained model from weights saved in 'ddqn-dropout-model.pth' proved successfull as:
+    Environment solved in 1 episodes!	Average Score: 20.00	Elapse time: 29.99
 
 
 
@@ -135,15 +135,15 @@ Finally, we added in the use of a Prioritize Experience Replay buffer to the DDQ
             update_rate=1          # how often to update the network
     ```
 
-    We do observe a clear improvement.
-        Environment solved in 176 episodes!	Average Score: 13.03	Elapse time: 1933.13
+We do observe a clear improvement.
+    Environment solved in 176 episodes!	Average Score: 13.03	Elapse time: 1933.13
 
-    <img src="media/per-ddqn_Train_moving_average.png" width="500" />
+<img src="media/per-ddqn_Train_moving_average.png" width="500" />
 
 
 #### Evaluation
-    On running the trained model from weights saved in 'ddqn-per-model.pth' proved successfull as:
-        Environment solved in 1 episodes!	Average Score: 20.00	Elapse time: 29.85
+On running the trained model from weights saved in 'ddqn-per-model.pth' proved successfull as:
+    Environment solved in 1 episodes!	Average Score: 20.00	Elapse time: 29.85
 
 
 ## 3. Conclusion
@@ -151,6 +151,8 @@ Finally, we added in the use of a Prioritize Experience Replay buffer to the DDQ
 
 ### 3.1 Findings
 <a id="findings"></a>
+
+
 
 ### 3.2 Ideas for future work
 <a id="future-work"></a>

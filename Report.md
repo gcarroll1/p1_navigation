@@ -92,7 +92,7 @@ As Reinforcement Learning algorithms are notoriously unstable the primary aim of
 
 Using hyperparameters (basicly unchanged) from data/double-dqn/params.json, we can see that indeed, the agent solves the environment in almost the same 400 episodes, but with greater stability. 
 
-<img src="media/double-ddqn_Train_moving_average.png" width="500" />
+<img src="media/double-dqn_Train_moving_average.png" width="500" />
 
 #### Evaluation
 On running the trained model from weights saved in 'double-dqn-model.pth' proved successfull as:
@@ -111,7 +111,7 @@ Using hyperparameters (basicly unchanged) from data/double-dqn/params.json, we i
 Environment solved in 280 episodes!	Average Score: 13.00	Elapse time: 2053.22
 
 
-<img src="imedia/ddqn-dropout_Train_moving_average.png" width="500" />
+<img src="media/ddqn-dropout_Train_moving_average.png" width="500" />
 
 #### Evaluation
 On running the trained model from weights saved in 'ddqn-dropout-model.pth' proved successfull as:
